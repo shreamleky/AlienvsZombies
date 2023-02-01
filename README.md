@@ -14,7 +14,7 @@ and number of zombies. The player can also save and load their game using savefi
 2. Open the command line and change directory to the particular one where the source file is stored, using cd like so:
 
 ```
-cd C:\Documents and Settings\...
+cd C:\file\...
 ```
 3. To compile, type in the command prompt:
 
