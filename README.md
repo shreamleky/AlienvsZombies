@@ -8,9 +8,7 @@ and number of zombies. The player can also save and load their game using savefi
 
 ![Game screenshot](AlienVsZombie.jpg)
 
-You may add one signature screenshot of your program here or above the title. Check out [this tutorial](https://www.digitalocean.com/community/tutorials/markdown-markdown-images) to learn how to do it.
-
-Please provide the YouTube link to your [Video Demo](https://youtube.com).
+[Video Demo](https://youtu.be/vMUVKV-I2E0).
 
 ## Compilation Instructions
 
