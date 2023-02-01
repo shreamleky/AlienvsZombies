@@ -43,4 +43,4 @@ No additional features have been implemented yet.
 
 ## Problems Encountered & Solutions
 
-1. There is a chance that zombies spawn in the middle, which will overwrite Alien spawn. Planning on adding a way so that zombies dont spawn directly in the middle.
+1. There is a chance that zombies spawn in the middle, which will overwrite Alien spawn. Planning on adding a way so that zombies do not spawn directly in the middle.
