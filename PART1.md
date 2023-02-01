@@ -34,8 +34,8 @@ No additional features have been implemented yet.
 
 ### Muhamad Syamil Imran bin Mohd Mansor
 
-1. Randomly generate game board with game objects.
-2. Game board settings.
+1. Game board settings.
+2. Randomly generate game board with game objects.
 3. Alien and Zombies attribute initialization
 4. Alien and Zombies spawning.
 
