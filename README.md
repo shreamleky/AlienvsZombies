@@ -11,7 +11,8 @@ and number of zombies. The player can also save and load their game using savefi
 ## Compilation Instructions
 
 1. Download and install a compiler.
-2. Open the command line and change directory to the particular one where the source file is stored, using cd like so:
+2. Extract files if in .zip.
+3. Open the command line and change directory to the particular one where the source file is stored, using cd like so:
 
 ```
 cd C:\file\...
