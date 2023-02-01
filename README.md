@@ -4,7 +4,7 @@ Alien vs. Zombie is a turn-based text game where the player navigates as an Alie
 role-playing game, puzzle path-planning and strategy. Prior to the game, players can set their own settings which includes game board dimensions 
 and number of zombies. The player can also save and load their game using savefiles.
 
-![Game screenshot](AlienVsZombie Screenshot.jpg)
+![Game screenshot](AlienVsZombieScreenshot.JPG)
 
 [Video Demo](https://youtu.be/vMUVKV-I2E0).
 
