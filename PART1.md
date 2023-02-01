@@ -2,7 +2,7 @@
 
 ## Video Demo
 
-[Video Demo](https://youtube.com).
+[Video Demo](https://youtu.be/vMUVKV-I2E0).
 
 ## Minimum Requirements
 
@@ -45,7 +45,4 @@ No additional features have been implemented yet.
 
 ## Problems Encountered & Solutions
 
-Describe the problems encountered and provide the solutions / plan for the solutions.
-
-1. There is a chance that zombies spawn in the middle, which will overwrite Alien spawn. Planning on 
-2. Alien movement 
+1. There is a chance that zombies spawn in the middle, which will overwrite Alien spawn. Planning on adding a way so that zombies dont spawn directly in the middle.
