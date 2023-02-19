@@ -2,7 +2,7 @@
 
 ## Video Demo
 
-Please provide the YouTube link to your [Video Demo](https://youtube.com).
+[Video Demo](https://youtu.be/vMUVKV-I2E0).
 
 ## Minimum Requirements
 
@@ -10,42 +10,42 @@ Please provide the YouTube link to your [Video Demo](https://youtube.com).
 
 List all the features completed.
 
-1. Cool Feature #1
-2. Cool Feature #2
-3. *add more*
+1. Game Board settings implemented.
+2. Randomly generated game board initialization with game objects.
+3. Alien and multiple Zombie attribute initialization.
+4. Alien and multiple Zombie spawn initialization.
+5. Alien and Zombie Movements.
+6. User command input.
+7. Game objects attributes.
+8. Game termination.
 
 ### To Do
 
 List all the features not yet done. Remove this section if there is no incomplete requirements.
 
-1. Cool Feature #1
-2. *add more*
+4. Access board setting feature.
+5. Saving and Loading Game File.
 
 ## Additional Features
 
-Describe the additional features that has been implemented.
+No additional features have been implemented yet.
 
 ## Contributions
 
-List down the contribution of each group members.
+### Muhamad Syamil Imran bin Mohd Mansor
 
-For example:
+1. Game board settings.
+2. Randomly generate game board with game objects.
+3. Alien and Zombies attribute initialization
+4. Alien and Zombies spawning.
+5. Alien and Zombie Movements.
+6. User command input.
+7. Game Objects attributes.
+8. Game Termination.
 
-### Tony Stark
-
-1. Randomly generate game board.
-2. *add more*
-
-### Steve Rogers
-
-1. Zombie movement and attack behaviour.
-2. *add more*
-
-### Dr. Strange
-
-1. Implement all game objects.
-2. *add more*
+### Muhammad Ammar Ajwad
 
 ## Problems Encountered & Solutions
 
-Describe the problems encountered and provide the solutions / plan for the solutions.
+1. There is a chance that zombies spawn in the middle, which will overwrite Alien spawn. Planning on adding a way so that zombies do not spawn directly in the middle. (Not Solved).
+2. Zombies Life won't reduce when pod is picked up (not solved).
