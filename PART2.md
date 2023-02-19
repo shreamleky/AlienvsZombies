@@ -25,6 +25,8 @@ List all the features not yet done. Remove this section if there is no incomplet
 
 4. Access board setting feature.
 5. Saving and Loading Game File.
+6. Alien and Zombie Attack
+7. Zombie's turn
 
 ## Additional Features
 
