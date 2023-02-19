@@ -36,6 +36,7 @@ public:
     int getDimY() const;
     bool isEmpty(int x, int y);
     bool isInsideMap(int x, int y);
+    char checkobstacle(int x, int y);
 
 };
 
@@ -216,6 +217,11 @@ int GameBoard::getNoOfZombies()
     return noOfZombies;
 }
 
+char GameBoard::checkobstacle(int x, int y)
+{
+    return map_[y-1][x-1];
+}
+
 class Characters
 {
     private:
@@ -225,17 +231,26 @@ class Characters
     int life_;
     int att_;
     int range_;
-    string Command_ = "up";
 
     public:
     Characters(char icon);
+    int getLife();
     void attributes(int life, int att, int range);
     void spawnInMiddle(GameBoard &gameboard);
     void spawnRandom(GameBoard &gameboard);
     void displayAlien();
     void displayZombies(int i, int num);
-    string getCommand();
-    void Command(GameBoard &gameboard);
+    void Command(GameBoard &gameboard, vector<Characters> zombies);
+    void MoveUp(GameBoard &gameboard);
+    void MoveDown(GameBoard &gameboard);
+    void MoveLeft(GameBoard &gameboard);
+    void MoveRight(GameBoard &gameboard);
+    void Arrow();
+    void Health();
+    void Rock(int x, int y, GameBoard &gameboard);
+    void Empty(GameBoard &gameboard);
+    void Pod(GameBoard &gameboard, vector<Characters> zombies);
+
 };
 
 Characters::Characters(char symbol)
@@ -274,6 +289,12 @@ void Characters::spawnRandom(GameBoard &gameboard)
     gameboard.setObject(x_, y_, icon);
 } 
 
+int Characters::getLife()
+{
+    int life = life_;
+    return life;
+}
+
 void game()
 {
     GameBoard gameboard;
@@ -291,21 +312,19 @@ void game()
         zombies[i].attributes((10 + rand() % 30) * 10 , (1 + rand() % 6) * 5 , 1 + rand() % 5);
     }
 
+    while (alien.getLife() > 0){
         gameboard.display();
         alien.displayAlien();
         for (int i = 0; i < gameboard.noOfZombies; i++)
         zombies[i].displayZombies(i, gameboard.noOfZombies);
 
-        alien.getCommand();
-        int k;
-        cin >> k;
-        do {
-            alien.Command(gameboard);
-            gameboard.display();
-            alien.displayAlien();
-            for (int i = 0; i < gameboard.noOfZombies; i++)
-            zombies[i].displayZombies(i, gameboard.noOfZombies);
-        } while(alien.getCommand() == "up");
+        alien.Command(gameboard, zombies);
+        alien.displayAlien();
+        for (int i = 0; i < gameboard.noOfZombies; i++)
+        zombies[i].displayZombies(i, gameboard.noOfZombies);
+        system("pause");
+        system("CLS");
+    } 
 }
 
 void Characters::displayAlien()
@@ -318,40 +337,344 @@ void Characters::displayZombies(int i, int num)
     cout << "Zombie " << i+1 << "    : Life " << setw(3) << life_ << ", Attack :  " << setw(2) << att_ << ", Range : " << range_ << endl; 
 }
 
-string Characters::getCommand()
+void Characters::MoveUp(GameBoard &gameboard)
 {
-    string command = Command_;
-    return command;
+    gameboard.setObject(x_, y_, '.');
+    gameboard.setObject(x_, y_-1, icon);
+    y_ = y_-1;
+    gameboard.display();
+
 }
 
-void Characters::Command(GameBoard &gameboard)
+void Characters::MoveDown(GameBoard &gameboard)
 {
+    gameboard.setObject(x_, y_, '.');
+    gameboard.setObject(x_, y_+1, icon);
+    y_ = y_+1;
+    gameboard.display();
 
-    if (Command_ == "up")
+}
+
+void Characters::MoveLeft(GameBoard &gameboard)
+{
+    gameboard.setObject(x_, y_, '.');
+    gameboard.setObject(x_-1, y_, icon);
+    x_ = x_-1;
+    gameboard.display();
+
+}
+
+void Characters::MoveRight(GameBoard &gameboard)
+{
+    gameboard.setObject(x_, y_, '.');
+    gameboard.setObject(x_+1, y_, icon);
+    x_ = x_+1;
+    gameboard.display();
+    
+}
+
+void Characters::Command(GameBoard &gameboard, vector<Characters> zombies)
+{
+    string Command;
+    cout << endl << "command> ";
+    cin >> Command;
+    start:;
+
+    if (Command == "up")
     {
-        gameboard.setObject(x_, y_, '.');
-        gameboard.setObject(x_, y_-1, icon);
-        y_ = y_-1;
+        while (gameboard.isInsideMap(x_, y_-1))
+        {
+            switch (gameboard.checkobstacle(x_, y_-1))
+            {
+                case ' ':
+                    Empty(gameboard);
+                    break;
+                case 'r':
+                    Rock(x_, y_-1, gameboard);  
+                    gameboard.display();
+                    goto endOfupLoop;
+                    break;
+                case 'h':
+                    Health();
+                    break;
+                case 'p':
+                    Pod(gameboard, zombies);
+                    break;
+                case '^':
+                    Arrow();                   
+                    break;
+                case 'v':
+                    Arrow();
+                    Command = "down";
+                    MoveUp(gameboard);
+                    system("pause");
+                    system("CLS");
+                    goto start;
+                    break;
+                case '<':
+                    Arrow();
+                    Command = "left";
+                    MoveUp(gameboard);
+                    system("pause");
+                    system("CLS");
+                    goto start;
+                    break;
+                case '>':
+                    Arrow();
+                    Command = "right";
+                    MoveUp(gameboard);
+                    system("pause");
+                    system("CLS");
+                    goto start;
+                    break;
+                default:
+                    break;
+            }   
+            MoveUp(gameboard);
+        }
+        endOfupLoop:;
     }
-    else if (Command_ == "down")
+    else if (Command == "down")
     {
-        gameboard.setObject(x_, y_, '.');
-        gameboard.setObject(x_, y_+1, icon);
-        y_ = y_+1;
+        while (gameboard.isInsideMap(x_, y_+1))
+        {
+            switch (gameboard.checkobstacle(x_, y_+1))
+            {
+                case ' ':
+                    Empty(gameboard);
+                    break;
+                case 'r':
+                    Rock(x_, y_+1, gameboard);  
+                    gameboard.display();
+                    goto endOfdownLoop;
+                    break;
+                case 'h':
+                    Health();
+                    break;
+                case 'p':
+                    Pod(gameboard, zombies);
+                    break;
+                case '^':
+                    Arrow();
+                    Command = "up";
+                    MoveDown(gameboard);
+                    system("pause");
+                    system("CLS");
+                    goto start;
+                    break;
+                case 'v':
+                    Arrow();
+                    break;
+                case '<':
+                    Arrow();
+                    Command = "left";
+                    MoveDown(gameboard);
+                    system("pause");
+                    system("CLS");
+                    goto start;
+                    break;
+                case '>':
+                    Arrow();
+                    Command = "right";
+                    MoveDown(gameboard);
+                    system("pause");
+                    system("CLS");
+                    goto start;
+                    break;
+                default:
+                    break;
+            }   
+            MoveDown(gameboard);
+        }
+        endOfdownLoop:;
     }
-    else if (Command_ == "left")
+    else if (Command == "left")
     {
-        gameboard.setObject(x_, y_, '.');
-        gameboard.setObject(x_-1, y_, icon);
-        x_ = x_-1;
+        while (gameboard.isInsideMap(x_-1, y_))
+        {
+            switch (gameboard.checkobstacle(x_-1, y_))
+            {
+                case ' ':
+                    Empty(gameboard);
+                    break;
+                case 'r':
+                    Rock(x_-1, y_, gameboard) ; 
+                    gameboard.display();
+                    goto endOfleftLoop;
+                    break;
+                case 'h':
+                    Health();
+                    break;
+                case 'p':
+                    Pod(gameboard, zombies);
+                    break;
+                case '^':
+                    Arrow();
+                    Command = "up";
+                    MoveLeft(gameboard);
+                    system("pause");
+                    system("CLS");
+                    goto start;
+                    break;
+                case 'v':
+                    Arrow();
+                    Command = "down";
+                    MoveLeft(gameboard);
+                    system("pause");
+                    system("CLS");
+                    goto start;
+                    break;
+                case '<':
+                    Arrow();
+                    break;
+                case '>':
+                    Arrow();
+                    Command = "right";
+                    MoveLeft(gameboard);
+                    system("pause");
+                    system("CLS");
+                    goto start;
+                    break;
+                default:
+                    break;
+            }   
+            MoveLeft(gameboard);
+        }
+        endOfleftLoop:;
     }
-    else if (Command_ == "right")
+    else if (Command == "right")
     {
-        gameboard.setObject(x_, y_, '.');
-        gameboard.setObject(x_+1, y_, icon);
-        x_ = x_+1;
+        while (gameboard.isInsideMap(x_+1, y_))
+        {
+            switch (gameboard.checkobstacle(x_+1, y_))
+            {
+                case ' ':
+                    Empty(gameboard);
+                    break;
+                case 'r':
+                    Rock(x_+1, y_, gameboard);  
+                    gameboard.display();
+                    goto endOfrightLoop;
+                    break;
+                case 'h':
+                    Health();
+                    break;
+                case 'p':
+                    Pod(gameboard, zombies);
+                    break;
+                case '^':
+                    Arrow();
+                    Command = "up";
+                    MoveRight(gameboard);
+                    system("pause");
+                    system("CLS");
+                    goto start;
+                    break;
+                case 'v':
+                    Arrow();
+                    Command = "down";
+                    MoveRight(gameboard);
+                    system("pause");
+                    system("CLS");
+                    goto start;
+                    break;
+                case '<':
+                    Arrow();
+                    Command = "left";
+                    MoveRight(gameboard);
+                    system("pause");
+                    system("CLS");
+                    goto start;
+                    break;
+                case '>':
+                    Arrow();
+                    break;
+                default:
+                    break;
+            }   
+            MoveRight(gameboard);
+        }
+        endOfrightLoop:;
+    }
+    else if (Command == "quit")
+    {
+        exit(1);
+    }
+
+}
+
+void Characters::Arrow()
+{
+    cout << "Alien finds an arrow." << endl;
+    cout << "Alien's attack is increased by 20." << endl << endl;
+    system("pause");
+    system("CLS");
+    att_ += 20;
+}
+
+void Characters::Health()
+{
+    cout << "Alien finds a health pack." << endl;
+    cout << "Alien's life is increased by 20." << endl << endl;
+    system("pause");
+    system("CLS");
+    life_ += 20;
+}
+
+void Characters::Pod(GameBoard &gameboard, vector<Characters> zombies)
+{
+    cout << "Alien finds a pod." << endl << endl;
+    for (int i = 0; i < gameboard.noOfZombies; i++)
+    zombies[i].life_ -= 10;
+
+    system("pause");
+    system("CLS");
+}
+
+void Characters::Rock(int x, int y, GameBoard &gameboard)
+{
+    char objects[] = {'h', 'v', '^', '>', '<', 'p'};
+    int noOfObjects = 6;
+    int objNo = rand() % noOfObjects;
+
+    cout << "Alien stumbles upon a rock." << endl;
+    gameboard.setObject(x, y, objects[objNo]);
+    switch (objects[objNo])
+    {
+    case 'h':
+        cout << "Alien discovers a health pack beneath the rock." << endl;
+        system("pause");
+        system("CLS");
+        break;
+    case 'v':
+    case '^': 
+    case '>':
+    case '<':
+        cout << "Alien discovers an arrow beneath the rock." << endl;
+        system("pause");
+        system("CLS");
+        break;
+    case 'p':
+        cout << "Alien discovers a pod beneath the rock." << endl;
+        system("pause");
+        system("CLS");
+        break;
+    default:
+        break;
     }
 }
+
+void Characters::Empty(GameBoard &gameboard)
+{
+    cout << "Alien finds an empty space." << endl;
+    system("pause");
+    system("CLS");
+}
+
+
+
+
+
 
 int main()
 {
