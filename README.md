@@ -32,7 +32,8 @@ outputfile.exe
 1. Game will start with a the default board settings screen. You can choose to change the settings by inputting 'y' when prompt.
 2. On the game settings screen, you can specify the gameboard's dimensions and the number of zombies.
 3. Then, a game screen will show, displaying the gameboard with the characters, obstacles and power-ups.
-4. To end the program, close the application window.
+4. Commands you can do to control the Alien are 'up', 'down', 'left', and 'right'
+5. To end the program, you can type 'exit' or close the application window.
 
 ## Progress Log
 
